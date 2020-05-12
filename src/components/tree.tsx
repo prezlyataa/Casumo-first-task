@@ -7,6 +7,27 @@ const Tree = (props: any) => {
 
     useEffect(() => setData(treeData), []);
 
+    const changeOpenValue = (data: any, node: any) => {
+        Object.values(data).forEach((item: any) => {
+            if(node.type === 'parent' && item.id === node.id) {
+                item.isOpen = !node.isOpen;
+            }
+            if(Array.isArray(item.children)) {
+                changeOpenValue(item.children, node)
+            }
+        });
+
+        setData({...data});
+    }
+
+    const handleToggleNode = (node: any, e: any) => {
+        e.preventDefault();
+        e.stopPropagation();
+        changeOpenValue(data, node);
+    }
+
+    console.log(data)
+
     return(
         <Fragment>
             {Object.values(data).map((node: any) => (
@@ -14,6 +35,7 @@ const Tree = (props: any) => {
                     key={`${node.type}.${node.id}`}
                     node={node}
                     level={0}
+                    onToggleNode={handleToggleNode}
                 />
             ))}
         </Fragment>
