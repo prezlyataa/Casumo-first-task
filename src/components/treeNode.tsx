@@ -11,16 +11,17 @@ const TreeNode = (props: any) => {
 
     return(
         <div
+            className="node"
             style={{paddingLeft: getPaddingLeft(level, node)}}
             onClick={(e: any) => onToggleNode(node, e)}
         >
             <div>
-                {node.type === 'parent'
+                {node.type === "parent"
                     && (node.isOpen
                     ? <i className="fa fa-angle-down" aria-hidden="true"></i>
                     : <i className="fa fa-angle-right" aria-hidden="true"></i>
                 )}
-                {`id: ${node.id} type: ${node.type}`}
+                <span className="nodeInfo">{`id: ${node.id} type: ${node.type}`}</span>
             </div>
 
             {node.isOpen && node.children.map((childNode: any) => (

@@ -1,0 +1,19 @@
+.button {
+    padding: 5px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.node {
+    padding-left: 10px;
+    border: 1px solid;
+    padding: 5px;
+    cursor: pointer;
+    margin: 2px 0;
+    border-radius: 5px;
+}
+
+.nodeInfo {
+    padding-left: 5px;
+}
