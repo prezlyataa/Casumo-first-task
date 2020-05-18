@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import TreeNode from './treeNode';
 import './styles.css';
 
@@ -7,7 +7,11 @@ const Tree = (props: any) => {
     const [isExpandedAll, setIsExpandedAll] = useState(false);
     const { treeData } = props;
 
-    useEffect(() => setData(treeData), [treeData]);
+    const changeData = useCallback(() => setData(treeData), [treeData]);
+
+    useEffect(() => {
+        changeData();
+    });
 
     const changeOpenValue = (data: any, node: any) => {
         Object.values(data).forEach((item: any) => {
@@ -32,9 +36,9 @@ const Tree = (props: any) => {
         return parentNodes;
     }
 
-    const isOpenAllNodes = (data: any) => {
+    const isOpenAllNodes = (data: any, condition: boolean) => {
         const parentNodes = getParentNodes(data);
-        const isOpenAll = parentNodes.every((node: any) => node.isOpen === true);
+        const isOpenAll = parentNodes.every((node: any) => node.isOpen === condition);
 
         return isOpenAll;
     }
@@ -44,7 +48,8 @@ const Tree = (props: any) => {
         e.stopPropagation();
         changeOpenValue(data, node);
 
-        if (isOpenAllNodes(Object.values(data))) setIsExpandedAll(true);
+        if (isOpenAllNodes(Object.values(data), true)) setIsExpandedAll(true);
+        if (isOpenAllNodes(Object.values(data), false)) setIsExpandedAll(false);
     }
 
     const handleExpandCollapseAll = (data: any, bool: boolean) => {
